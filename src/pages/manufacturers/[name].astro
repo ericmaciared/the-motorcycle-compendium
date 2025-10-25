@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BikeCard from '../../components/BikeCard.astro';
+import { supabase } from '../../lib/supabase';
+import type { Manufacturer, MotorbikeModel, MotorbikeVariant } from '../../lib/supabase';
+
+export async function getStaticPaths() {
+  const { data: manufacturers } = await supabase
+    .from('manufacturers')
+    .select('slug');
+
+  return manufacturers?.map((manufacturer) => ({
+    params: { name: manufacturer.slug },
+  })) || [];
+}
+
+const { name } = Astro.params;
+
+if (!name) {
+  return Astro.redirect('/404');
+}
+
+// Convert URL slug back to manufacturer name format
+const manufacturerSlug = name.toLowerCase();
+
+// Fetch manufacturer details
+const { data: manufacturer, error: manufacturerError } = await supabase
+  .from('manufacturers')
+  .select('*')
+  .eq('slug', manufacturerSlug)
+  .single();
+
+if (manufacturerError || !manufacturer) {
+  console.error('Error fetching manufacturer:', manufacturerError);
+  return Astro.redirect('/404');
+}
+
+// Fetch all models for this manufacturer with their variants
+const { data: models, error: modelsError } = await supabase
+  .from('motorbike_models')
+  .select('*')
+  .eq('manufacturer_id', manufacturer.id);
+
+if (modelsError) {
+  console.error('Error fetching models:', modelsError);
+}
+
+// Fetch all variants for these models
+const modelIds = models?.map(m => m.id) || [];
+const { data: variants, error: variantsError } = await supabase
+  .from('motorbike_variants')
+  .select('*, motorbike_models!inner(*, manufacturers!inner(*))')
+  .in('model_id', modelIds)
+  .eq('is_available', true)
+  .order('year', { ascending: false });
+
+if (variantsError) {
+  console.error('Error fetching variants:', variantsError);
+}
+
+// Transform data to match BikeCard interface
+const bikes = variants?.map(bike => ({
+  id: bike.id,
+  slug: bike.slug,
+  variant_name: bike.variant_name,
+  year: bike.year,
+  price_usd: bike.price_usd,
+  engine_displacement_cc: bike.engine_displacement_cc,
+  horsepower_hp: bike.horsepower_hp,
+  description: bike.description,
+  model_name: bike.motorbike_models.name,
+  manufacturer_name: bike.motorbike_models.manufacturers.name,
+  category: bike.motorbike_models.category,
+})) || [];
+---
+
+<BaseLayout title={`${manufacturer.name} Motorcycles | The Motorbike Compendium`}>
+  <div class="container mx-auto px-4 py-8">
+    <!-- Breadcrumb -->
+    <nav class="mb-6 text-sm text-slate-600">
+      <a href="/" class="hover:text-blue-600">Home</a>
+      <span class="mx-2">/</span>
+      <a href="/bikes" class="hover:text-blue-600">Bikes</a>
+      <span class="mx-2">/</span>
+      <span class="text-slate-900">{manufacturer.name}</span>
+    </nav>
+
+    <!-- Manufacturer Header -->
+    <div class="bg-white rounded-xl shadow-md p-8 mb-8">
+      <div class="flex items-start justify-between">
+        <div>
+          <h1 class="text-4xl font-bold text-slate-900 mb-2">{manufacturer.name}</h1>
+          {manufacturer.country && (
+            <p class="text-slate-600 mb-2">
+              <span class="font-semibold">Country:</span> {manufacturer.country}
+            </p>
+          )}
+          {manufacturer.founded_year && (
+            <p class="text-slate-600 mb-4">
+              <span class="font-semibold">Founded:</span> {manufacturer.founded_year}
+            </p>
+          )}
+          {manufacturer.description && (
+            <p class="text-slate-700 leading-relaxed max-w-3xl">
+              {manufacturer.description}
+            </p>
+          )}
+        </div>
+        {manufacturer.website_url && (
+          <a
+            href={manufacturer.website_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition whitespace-nowrap"
+          >
+            Visit Website
+          </a>
+        )}
+      </div>
+    </div>
+
+    <!-- Models Count -->
+    <div class="mb-6">
+      <h2 class="text-2xl font-bold text-slate-900 mb-2">
+        Available Models ({bikes.length})
+      </h2>
+      <p class="text-slate-600">
+        Browse all {manufacturer.name} motorcycles in our collection
+      </p>
+    </div>
+
+    <!-- Bikes Grid -->
+    {bikes.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {bikes.map((bike) => (
+          <BikeCard bike={bike} />
+        ))}
+      </div>
+    ) : (
+      <div class="bg-slate-100 rounded-xl p-12 text-center">
+        <span class="text-6xl mb-4 block">🏍️</span>
+        <h3 class="text-xl font-semibold text-slate-700 mb-2">
+          No Models Available
+        </h3>
+        <p class="text-slate-600">
+          We currently don't have any {manufacturer.name} motorcycles in our database.
+        </p>
+        <a
+          href="/bikes"
+          class="inline-block mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+        >
+          Browse All Bikes
+        </a>
+      </div>
+    )}
+  </div>
+</BaseLayout>

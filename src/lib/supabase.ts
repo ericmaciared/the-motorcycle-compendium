@@ -47,9 +47,17 @@ export type MotorbikeVariant = {
   engine_displacement_cc: number | null;
   horsepower_hp: number | null;
   torque_nm: number | null;
+  transmission_type: string | null;
+  cooling_system: string | null;
   weight_kg: number | null;
   seat_height_mm: number | null;
   top_speed_kmh: number | null;
+  fuel_capacity_liters: number | null;
+  fuel_consumption_l_per_100km: number | null;
+  front_brake_type: string | null;
+  rear_brake_type: string | null;
+  front_tire_size: string | null;
+  rear_tire_size: string | null;
   abs: boolean;
   traction_control: boolean;
   description: string | null;

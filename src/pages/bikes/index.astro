@@ -9,8 +9,10 @@ const selectedCategory = url.searchParams.get('category');
 const selectedManufacturer = url.searchParams.get('manufacturer');
 const minPrice = url.searchParams.get('minPrice');
 const maxPrice = url.searchParams.get('maxPrice');
+const sortBy = url.searchParams.get('sort') || 'newest';
 
-// Build query with filters
+// Build query - fetch all data first, then filter in memory
+// This is necessary because PostgREST doesn't support filtering on nested relations
 let query = supabase
   .from('motorbike_variants')
   .select(`
@@ -24,15 +26,7 @@ let query = supabase
     )
   `);
 
-// Apply filters
-if (selectedCategory) {
-  query = query.eq('motorbike_models.category', selectedCategory);
-}
-
-if (selectedManufacturer) {
-  query = query.eq('motorbike_models.manufacturers.name', selectedManufacturer);
-}
-
+// Apply price filters (these work at the database level)
 if (minPrice) {
   query = query.gte('price_usd', parseFloat(minPrice));
 }
@@ -41,8 +35,38 @@ if (maxPrice) {
   query = query.lte('price_usd', parseFloat(maxPrice));
 }
 
+// Apply sorting
+switch (sortBy) {
+  case 'price-low':
+    query = query.order('price_usd', { ascending: true, nullsFirst: false });
+    break;
+  case 'price-high':
+    query = query.order('price_usd', { ascending: false, nullsFirst: false });
+    break;
+  case 'name':
+    query = query.order('variant_name', { ascending: true });
+    break;
+  case 'newest':
+  default:
+    query = query.order('year', { ascending: false }).order('created_at', { ascending: false });
+    break;
+}
+
 // Fetch data
-const { data: bikes, error } = await query.order('created_at', { ascending: false });
+let { data: bikes, error } = await query;
+
+if (error) {
+  console.error('Error fetching bikes:', error);
+}
+
+// Apply category and manufacturer filters in memory (PostgREST limitation)
+if (bikes && selectedCategory) {
+  bikes = bikes.filter(bike => bike.motorbike_models.category === selectedCategory);
+}
+
+if (bikes && selectedManufacturer) {
+  bikes = bikes.filter(bike => bike.motorbike_models.manufacturers.name === selectedManufacturer);
+}
 
 // Transform data
 const motorcycles = bikes?.map(bike => ({
@@ -166,22 +190,22 @@ const categories = ['Sport', 'Cruiser', 'Adventure', 'Touring', 'Naked', 'Dual S
           <!-- Active Filters -->
           {(selectedCategory || selectedManufacturer || minPrice || maxPrice) && (
             <div class="mt-6 pt-6 border-t border-slate-200">
-              <h3 class="text-sm font-semibold text-slate-700 mb-2">Active Filters:</h3>
-              <div class="space-y-2">
+              <h3 class="text-sm font-semibold text-slate-700 mb-3">Active Filters</h3>
+              <div class="flex flex-wrap gap-2">
                 {selectedCategory && (
-                  <div class="text-sm bg-blue-50 text-blue-700 px-2 py-1 rounded">
-                    Category: {selectedCategory}
-                  </div>
+                  <span class="inline-flex items-center gap-1.5 text-xs bg-blue-100 text-blue-800 px-3 py-1.5 rounded-full font-medium">
+                    <span class="font-semibold">Category:</span> {selectedCategory}
+                  </span>
                 )}
                 {selectedManufacturer && (
-                  <div class="text-sm bg-blue-50 text-blue-700 px-2 py-1 rounded">
-                    Make: {selectedManufacturer}
-                  </div>
+                  <span class="inline-flex items-center gap-1.5 text-xs bg-purple-100 text-purple-800 px-3 py-1.5 rounded-full font-medium">
+                    <span class="font-semibold">Brand:</span> {selectedManufacturer}
+                  </span>
                 )}
                 {(minPrice || maxPrice) && (
-                  <div class="text-sm bg-blue-50 text-blue-700 px-2 py-1 rounded">
-                    Price: ${minPrice || '0'} - ${maxPrice || '∞'}
-                  </div>
+                  <span class="inline-flex items-center gap-1.5 text-xs bg-green-100 text-green-800 px-3 py-1.5 rounded-full font-medium">
+                    <span class="font-semibold">Price:</span> ${minPrice || '0'} - ${maxPrice || '∞'}
+                  </span>
                 )}
               </div>
             </div>
@@ -197,13 +221,25 @@ const categories = ['Sport', 'Cruiser', 'Adventure', 'Touring', 'Naked', 'Dual S
               <p class="text-slate-600">
                 Showing <span class="font-semibold">{motorcycles.length}</span> motorcycles
               </p>
-              <select class="border border-slate-300 rounded-lg px-3 py-2 text-sm">
-                <option>Sort by: Newest</option>
-                <option>Sort by: Price (Low to High)</option>
-                <option>Sort by: Price (High to Low)</option>
-                <option>Sort by: Name (A-Z)</option>
+              <select
+                class="border border-slate-300 rounded-lg px-3 py-2 text-sm"
+                onchange="window.location.href = updateSort(this.value)"
+                id="sortSelect"
+              >
+                <option value="newest" selected={sortBy === 'newest'}>Sort by: Newest</option>
+                <option value="price-low" selected={sortBy === 'price-low'}>Sort by: Price (Low to High)</option>
+                <option value="price-high" selected={sortBy === 'price-high'}>Sort by: Price (High to Low)</option>
+                <option value="name" selected={sortBy === 'name'}>Sort by: Name (A-Z)</option>
               </select>
             </div>
+
+            <script is:inline>
+              function updateSort(sortValue) {
+                const url = new URL(window.location.href);
+                url.searchParams.set('sort', sortValue);
+                return url.toString();
+              }
+            </script>
             
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {motorcycles.map(bike => (
