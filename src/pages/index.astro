@@ -47,83 +47,107 @@ const bikeCount = bikes?.length || 0;
 ---
 
 <BaseLayout title="The Motorbike Compendium - Your Complete Motorcycle Reference">
-  <!-- Hero Section -->
-  <section class="relative bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white py-24 md:py-32 overflow-hidden">
-    <!-- Animated background elements -->
-    <div class="absolute inset-0 opacity-20">
-      <div class="absolute top-20 left-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-20 right-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse delay-1000"></div>
+  <!-- Hero Section - Topographic/Meteorological Style -->
+  <section class="relative bg-topo-900 text-topo-50 py-24 md:py-32 overflow-hidden">
+    <!-- Topographic map pattern background -->
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute inset-0 bg-contour-lines"></div>
+      <div class="absolute inset-0 bg-topo-grid"></div>
     </div>
 
+    <!-- Flow field subtle animation -->
+    <div class="absolute inset-0 bg-flow-field opacity-10"></div>
+
     <div class="container mx-auto px-4 text-center relative z-10">
-      <div class="inline-block mb-6 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-300 text-sm font-semibold backdrop-blur-sm">
+      <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-signal-blue/20 text-signal-blue text-xs font-bold uppercase tracking-widest elevation-1">
+        <span class="signal-dot bg-signal-blue"></span>
         AI-Powered Motorcycle Database
       </div>
 
-      <h1 class="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-white via-blue-100 to-blue-300 bg-clip-text text-transparent leading-tight">
+      <h1 class="text-6xl md:text-8xl font-extrabold mb-6 text-topo-50 leading-none tracking-tighter">
         The Motorbike<br class="md:hidden" /> Compendium
       </h1>
 
-      <p class="text-lg md:text-2xl mb-10 text-slate-300 max-w-3xl mx-auto leading-relaxed">
+      <p class="text-lg md:text-xl mb-10 text-topo-300 max-w-2xl mx-auto font-medium">
         Discover, compare, and explore motorcycles from around the world with intelligent AI-powered insights
       </p>
 
-      <!-- Quick stats -->
-      <div class="flex justify-center gap-8 text-sm text-slate-400 mt-8">
-        <div><span class="font-bold text-white">{manufacturerCount}+</span> Brands</div>
-        <div class="border-l border-slate-700"></div>
-        <div><span class="font-bold text-white">{bikeCount}+</span> Models</div>
-        <div class="border-l border-slate-700"></div>
-        <div><span class="font-bold text-white">AI</span> Insights</div>
+      <!-- Quick stats - Data-point style -->
+      <div class="flex justify-center gap-8 text-sm text-topo-400 mt-8">
+        <div class="flex items-center gap-2">
+          <span class="data-point bg-signal-red"></span>
+          <span class="metric-value text-topo-100">{manufacturerCount}+</span> Brands
+        </div>
+        <div class="w-px h-4 bg-topo-600"></div>
+        <div class="flex items-center gap-2">
+          <span class="data-point bg-signal-amber"></span>
+          <span class="metric-value text-topo-100">{bikeCount}+</span> Models
+        </div>
+        <div class="w-px h-4 bg-topo-600"></div>
+        <div class="flex items-center gap-2">
+          <span class="data-point bg-signal-green"></span>
+          <span class="metric-value text-topo-100">AI</span> Insights
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Stats Section with Glass-morphism -->
+  <!-- Stats Section - Clean data presentation -->
   <section class="py-16 relative">
     <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-        <div class="group relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border border-slate-200/50 hover:scale-105">
-          <div class="absolute inset-0 bg-linear-to-br from-blue-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+        <div class="group relative bg-topo-50 elevation-2 hover:elevation-3 transition-all duration-200 p-10">
+          <!-- Corner accent -->
+          <div class="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-signal-blue opacity-40"></div>
+          <div class="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-signal-blue opacity-40"></div>
+
           <div class="relative">
-            <div class="text-5xl font-extrabold bg-linear-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent mb-3">{bikeCount}</div>
-            <div class="text-slate-700 font-semibold text-lg">Motorcycle Models</div>
-            <div class="text-slate-500 text-sm mt-1">And counting...</div>
+            <div class="text-6xl font-extrabold text-topo-900 mb-3 metric-value">{bikeCount}</div>
+            <div class="text-topo-700 font-bold text-sm uppercase tracking-widest">Motorcycle Models</div>
+            <div class="text-topo-500 text-xs mt-2 uppercase tracking-wider">And counting...</div>
           </div>
         </div>
-        <div class="group relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border border-slate-200/50 hover:scale-105">
-          <div class="absolute inset-0 bg-linear-to-br from-purple-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+        <div class="group relative bg-topo-50 elevation-2 hover:elevation-3 transition-all duration-200 p-10">
+          <!-- Corner accent -->
+          <div class="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-signal-amber opacity-40"></div>
+          <div class="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-signal-amber opacity-40"></div>
+
           <div class="relative">
-            <div class="text-5xl font-extrabold bg-linear-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent mb-3">{manufacturerCount}</div>
-            <div class="text-slate-700 font-semibold text-lg">Manufacturers</div>
-            <div class="text-slate-500 text-sm mt-1">Global brands</div>
+            <div class="text-6xl font-extrabold text-topo-900 mb-3 metric-value">{manufacturerCount}</div>
+            <div class="text-topo-700 font-bold text-sm uppercase tracking-widest">Manufacturers</div>
+            <div class="text-topo-500 text-xs mt-2 uppercase tracking-wider">Global brands</div>
           </div>
         </div>
-        <div class="group relative bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border border-slate-200/50 hover:scale-105">
-          <div class="absolute inset-0 bg-linear-to-br from-emerald-500/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+        <div class="group relative bg-topo-50 elevation-2 hover:elevation-3 transition-all duration-200 p-10">
+          <!-- Corner accent -->
+          <div class="absolute top-0 left-0 w-12 h-12 border-t-4 border-l-4 border-signal-green opacity-40"></div>
+          <div class="absolute bottom-0 right-0 w-12 h-12 border-b-4 border-r-4 border-signal-green opacity-40"></div>
+
           <div class="relative">
-            <div class="text-5xl font-extrabold bg-linear-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent mb-3">AI</div>
-            <div class="text-slate-700 font-semibold text-lg">Powered Insights</div>
-            <div class="text-slate-500 text-sm mt-1">Smart recommendations</div>
+            <div class="text-6xl font-extrabold text-topo-900 mb-3 metric-value">AI</div>
+            <div class="text-topo-700 font-bold text-sm uppercase tracking-widest">Powered Insights</div>
+            <div class="text-topo-500 text-xs mt-2 uppercase tracking-wider">Smart recommendations</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="py-16 bg-slate-50">
+  <section class="py-16 bg-topo-100">
     <div class="container mx-auto px-4">
-      <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center justify-between mb-10">
         <div>
-          <h2 class="text-4xl font-bold bg-linear-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent mb-2">Featured Motorcycles</h2>
-          <p class="text-slate-600">Explore our latest additions</p>
+          <h2 class="text-4xl md:text-5xl font-bold text-topo-900 mb-2 tracking-tight">Featured Motorcycles</h2>
+          <p class="text-topo-600 text-sm uppercase tracking-wider">Explore our latest additions</p>
         </div>
-        <a href="/bikes" class="text-blue-600 hover:text-blue-700 font-bold flex items-center gap-2 group">
+        <a href="/bikes" class="text-topo-900 hover:text-signal-blue font-bold flex items-center gap-2 group uppercase text-sm tracking-wider">
           View All
           <span class="transform group-hover:translate-x-1 transition-transform">→</span>
         </a>
       </div>
-      
+
       {motorcycles.length > 0 ? (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {motorcycles.map(bike => (
@@ -132,24 +156,32 @@ const bikeCount = bikes?.length || 0;
         </div>
       ) : (
         <div class="text-center py-12">
-          <p class="text-slate-600">No motorcycles found. Run the seed script to add data!</p>
+          <p class="text-topo-600">No motorcycles found. Run the seed script to add data!</p>
         </div>
       )}
     </div>
   </section>
 
 
-  <section class="relative py-20 bg-linear-to-br from-blue-600 via-blue-700 to-purple-700 text-white overflow-hidden">
-    <!-- Decorative elements -->
-    <div class="absolute inset-0 opacity-10">
-      <div class="absolute top-0 right-0 w-96 h-96 bg-white rounded-full mix-blend-overlay filter blur-3xl"></div>
-      <div class="absolute bottom-0 left-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-overlay filter blur-3xl"></div>
+  <section class="relative py-20 bg-topo-800 text-topo-50 overflow-hidden">
+    <!-- Topographic elements -->
+    <div class="absolute inset-0 opacity-20">
+      <div class="absolute inset-0 bg-contour-lines"></div>
+      <div class="absolute inset-0 bg-topo-grid"></div>
+    </div>
+
+    <!-- Signal dots scattered -->
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute top-10 left-20 w-3 h-3 bg-signal-red rounded-full"></div>
+      <div class="absolute top-32 right-40 w-2 h-2 bg-signal-amber rounded-full"></div>
+      <div class="absolute bottom-24 left-1/3 w-3 h-3 bg-signal-green rounded-full"></div>
+      <div class="absolute bottom-40 right-20 w-2 h-2 bg-signal-blue rounded-full"></div>
     </div>
 
     <div class="container mx-auto px-4 text-center relative z-10">
-      <h2 class="text-4xl md:text-5xl font-bold mb-4">Ready to Explore?</h2>
-      <p class="text-xl mb-10 text-blue-100 max-w-2xl mx-auto">Discover detailed specs, compare models, and get AI-powered insights to find your perfect ride</p>
-      <a href="/bikes" class="inline-block bg-white text-blue-600 px-10 py-4 rounded-xl font-bold hover:bg-blue-50 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 transform">
+      <h2 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Ready to Explore?</h2>
+      <p class="text-lg md:text-xl mb-10 text-topo-300 max-w-2xl mx-auto">Discover detailed specs, compare models, and get AI-powered insights to find your perfect ride</p>
+      <a href="/bikes" class="inline-block bg-signal-blue text-white px-10 py-4 font-bold hover:bg-topo-900 transition-all duration-200 elevation-2 hover:elevation-3 uppercase tracking-wider text-sm">
         Browse All Motorcycles
         <span class="ml-2">→</span>
       </a>

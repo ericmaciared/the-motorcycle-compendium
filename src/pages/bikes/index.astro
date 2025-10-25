@@ -39,13 +39,16 @@ const motorcycles = bikes?.map(bike => ({
 ---
 
 <BaseLayout title="All Motorcycles - The Motorbike Compendium">
-  <div class="container mx-auto px-4 py-8">
-    <!-- Header -->
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-2">All Motorcycles</h1>
-      <p class="text-slate-600">
-        {motorcycles.length} motorcycles
-      </p>
+  <div class="container mx-auto px-4 py-12">
+    <!-- Header - Large, design studio style -->
+    <div class="mb-12">
+      <h1 class="text-5xl md:text-6xl font-bold text-topo-900 mb-3 tracking-tight">All Motorcycles</h1>
+      <div class="flex items-center gap-3">
+        <span class="data-point bg-signal-blue"></span>
+        <p class="text-topo-600 uppercase tracking-wider text-sm font-bold">
+          {motorcycles.length} motorcycles in database
+        </p>
+      </div>
     </div>
 
     <!-- Bikes Grid -->
@@ -56,10 +59,10 @@ const motorcycles = bikes?.map(bike => ({
         ))}
       </div>
     ) : (
-      <div class="bg-white rounded-lg shadow-md p-12 text-center">
+      <div class="bg-topo-50 elevation-2 p-12 text-center">
         <div class="text-6xl mb-4">🏍️</div>
-        <h3 class="text-xl font-bold mb-2">No motorcycles found</h3>
-        <p class="text-slate-600">Check back later for new bikes</p>
+        <h3 class="text-xl font-bold text-topo-900 mb-2">No motorcycles found</h3>
+        <p class="text-topo-600 text-sm uppercase tracking-wider">Check back later for new bikes</p>
       </div>
     )}
   </div>

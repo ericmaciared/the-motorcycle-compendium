@@ -75,58 +75,75 @@ const bikes = variants?.map(bike => ({
 ---
 
 <BaseLayout title={`${manufacturer.name} Motorcycles | The Motorbike Compendium`}>
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-12">
     <!-- Breadcrumb -->
-    <nav class="mb-6 text-sm text-slate-600">
-      <a href="/" class="hover:text-blue-600">Home</a>
+    <nav class="mb-8 text-xs text-topo-600 uppercase tracking-wider">
+      <a href="/" class="hover:text-signal-blue font-medium">Home</a>
       <span class="mx-2">/</span>
-      <a href="/bikes" class="hover:text-blue-600">Bikes</a>
+      <a href="/bikes" class="hover:text-signal-blue font-medium">Bikes</a>
       <span class="mx-2">/</span>
-      <span class="text-slate-900">{manufacturer.name}</span>
+      <span class="text-topo-900 font-bold">{manufacturer.name}</span>
     </nav>
 
     <!-- Manufacturer Header -->
-    <div class="bg-white rounded-xl shadow-md p-8 mb-8">
-      <div class="flex items-start justify-between">
-        <div>
-          <h1 class="text-4xl font-bold text-slate-900 mb-2">{manufacturer.name}</h1>
-          {manufacturer.country && (
-            <p class="text-slate-600 mb-2">
-              <span class="font-semibold">Country:</span> {manufacturer.country}
-            </p>
-          )}
-          {manufacturer.founded_year && (
-            <p class="text-slate-600 mb-4">
-              <span class="font-semibold">Founded:</span> {manufacturer.founded_year}
-            </p>
-          )}
+    <div class="bg-topo-50 elevation-2 p-8 mb-12 relative">
+      <!-- Subtle background pattern -->
+      <div class="absolute inset-0 bg-flow-field opacity-10 pointer-events-none"></div>
+
+      <div class="flex flex-col lg:flex-row items-start justify-between gap-6 relative">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="signal-dot bg-signal-amber"></span>
+            <span class="text-xs font-bold text-topo-700 uppercase tracking-widest">Manufacturer</span>
+          </div>
+          <h1 class="text-5xl font-bold text-topo-900 mb-4 tracking-tight">{manufacturer.name}</h1>
+
+          <div class="flex flex-wrap gap-6 mb-6">
+            {manufacturer.country && (
+              <div>
+                <span class="text-xs text-topo-600 uppercase tracking-wider font-bold block mb-1">Country</span>
+                <p class="text-topo-900 font-bold">{manufacturer.country}</p>
+              </div>
+            )}
+            {manufacturer.founded_year && (
+              <div>
+                <span class="text-xs text-topo-600 uppercase tracking-wider font-bold block mb-1">Founded</span>
+                <p class="text-topo-900 font-bold metric-value">{manufacturer.founded_year}</p>
+              </div>
+            )}
+          </div>
+
           {manufacturer.description && (
-            <p class="text-slate-700 leading-relaxed max-w-3xl">
+            <p class="text-topo-700 leading-relaxed max-w-3xl">
               {manufacturer.description}
             </p>
           )}
         </div>
+
         {manufacturer.website_url && (
           <a
             href={manufacturer.website_url}
             target="_blank"
             rel="noopener noreferrer"
-            class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition whitespace-nowrap"
+            class="bg-topo-900 text-topo-50 px-6 py-3 font-bold hover:bg-signal-blue transition whitespace-nowrap uppercase tracking-wider text-sm elevation-1"
           >
-            Visit Website
+            Visit Website →
           </a>
         )}
       </div>
     </div>
 
     <!-- Models Count -->
-    <div class="mb-6">
-      <h2 class="text-2xl font-bold text-slate-900 mb-2">
-        Available Models ({bikes.length})
+    <div class="mb-10">
+      <h2 class="text-3xl font-bold text-topo-900 mb-2 tracking-tight">
+        Available Models
       </h2>
-      <p class="text-slate-600">
-        Browse all {manufacturer.name} motorcycles in our collection
-      </p>
+      <div class="flex items-center gap-3">
+        <span class="data-point bg-signal-blue"></span>
+        <p class="text-topo-600 uppercase tracking-wider text-sm font-bold">
+          {bikes.length} {manufacturer.name} motorcycles in collection
+        </p>
+      </div>
     </div>
 
     <!-- Bikes Grid -->
@@ -137,17 +154,17 @@ const bikes = variants?.map(bike => ({
         ))}
       </div>
     ) : (
-      <div class="bg-slate-100 rounded-xl p-12 text-center">
+      <div class="bg-topo-50 elevation-2 p-12 text-center">
         <span class="text-6xl mb-4 block">🏍️</span>
-        <h3 class="text-xl font-semibold text-slate-700 mb-2">
+        <h3 class="text-xl font-bold text-topo-900 mb-2">
           No Models Available
         </h3>
-        <p class="text-slate-600">
+        <p class="text-topo-600 mb-6">
           We currently don't have any {manufacturer.name} motorcycles in our database.
         </p>
         <a
           href="/bikes"
-          class="inline-block mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+          class="inline-block bg-topo-900 text-topo-50 px-6 py-3 font-bold hover:bg-signal-blue transition uppercase tracking-wider text-sm elevation-1"
         >
           Browse All Bikes
         </a>

@@ -26,8 +26,17 @@ const { title } = Astro.props;
       }
     </style>
   </head>
-  <body class="min-h-screen bg-linear-to-br from-slate-50 via-white to-blue-50 antialiased">
-    <Navigation />
-    <slot />
+  <body class="min-h-screen bg-topo-100 antialiased relative">
+    <!-- Topographic grid background -->
+    <div class="fixed inset-0 bg-topo-grid opacity-40 pointer-events-none"></div>
+
+    <!-- Subtle contour lines overlay -->
+    <div class="fixed inset-0 bg-contour-lines opacity-30 pointer-events-none"></div>
+
+    <!-- Main content with relative positioning -->
+    <div class="relative z-10">
+      <Navigation />
+      <slot />
+    </div>
   </body>
 </html>

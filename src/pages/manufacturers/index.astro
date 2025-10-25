@@ -14,13 +14,16 @@ if (error) {
 ---
 
 <BaseLayout title="Motorcycle Manufacturers - The Motorbike Compendium">
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-12">
     <!-- Header -->
-    <div class="mb-8">
-      <h1 class="text-4xl font-bold mb-2">Motorcycle Manufacturers</h1>
-      <p class="text-slate-600">
-        Explore {manufacturers?.length || 0} legendary motorcycle brands from around the world
-      </p>
+    <div class="mb-12">
+      <h1 class="text-5xl md:text-6xl font-bold text-topo-900 mb-3 tracking-tight">Motorcycle Manufacturers</h1>
+      <div class="flex items-center gap-3">
+        <span class="data-point bg-signal-amber"></span>
+        <p class="text-topo-600 uppercase tracking-wider text-sm font-bold">
+          Explore {manufacturers?.length || 0} legendary motorcycle brands from around the world
+        </p>
+      </div>
     </div>
 
     <!-- Manufacturers Grid -->
@@ -29,32 +32,35 @@ if (error) {
         {manufacturers.map(manufacturer => (
           <a
             href={`/manufacturers/${manufacturer.slug}`}
-            class="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100 hover:border-blue-200 hover:scale-[1.02]"
+            class="group bg-topo-50 elevation-2 hover:elevation-3 transition-all duration-200 overflow-hidden relative"
           >
-            <div class="p-6">
+            <!-- Subtle background pattern -->
+            <div class="absolute inset-0 bg-flow-field opacity-10 pointer-events-none"></div>
+
+            <div class="p-6 relative">
               <!-- Name and Country -->
               <div class="mb-4">
-                <h2 class="text-2xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors mb-2">
+                <h2 class="text-2xl font-bold text-topo-900 mb-3 tracking-tight leading-tight">
                   {manufacturer.name}
                 </h2>
-                <div class="flex items-center gap-2 text-sm text-slate-600">
+                <div class="flex items-center gap-2 text-xs text-topo-600">
                   <span class="text-xl">{manufacturer.country === 'Japan' ? '🇯🇵' : manufacturer.country === 'Italy' ? '🇮🇹' : manufacturer.country === 'Germany' ? '🇩🇪' : manufacturer.country === 'USA' ? '🇺🇸' : manufacturer.country === 'Austria' ? '🇦🇹' : manufacturer.country === 'UK' ? '🇬🇧' : manufacturer.country === 'India' ? '🇮🇳' : '🌍'}</span>
-                  <span class="font-medium">{manufacturer.country}</span>
+                  <span class="font-bold uppercase tracking-wider">{manufacturer.country}</span>
                   {manufacturer.founded_year && (
-                    <span class="text-slate-400">• Est. {manufacturer.founded_year}</span>
+                    <span class="text-topo-400">• Est. <span class="metric-value">{manufacturer.founded_year}</span></span>
                   )}
                 </div>
               </div>
 
               <!-- Description -->
               {manufacturer.description && (
-                <p class="text-slate-600 text-sm line-clamp-3 mb-4">
+                <p class="text-topo-700 text-sm line-clamp-3 mb-4 leading-relaxed">
                   {manufacturer.description}
                 </p>
               )}
 
               <!-- View Details Link -->
-              <div class="flex items-center text-blue-600 font-semibold group-hover:text-blue-700">
+              <div class="flex items-center text-topo-900 group-hover:text-signal-blue font-bold text-sm uppercase tracking-wider">
                 View Models
                 <span class="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
               </div>
@@ -63,10 +69,10 @@ if (error) {
         ))}
       </div>
     ) : (
-      <div class="bg-white rounded-lg shadow-md p-12 text-center">
+      <div class="bg-topo-50 elevation-2 p-12 text-center">
         <div class="text-6xl mb-4">🏭</div>
-        <h3 class="text-xl font-bold mb-2">No manufacturers found</h3>
-        <p class="text-slate-600">Check back soon for more manufacturers</p>
+        <h3 class="text-xl font-bold text-topo-900 mb-2">No manufacturers found</h3>
+        <p class="text-topo-600 text-sm uppercase tracking-wider">Check back soon for more manufacturers</p>
       </div>
     )}
   </div>

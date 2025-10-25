@@ -1,1 +1,135 @@
 @import "tailwindcss";
+
+/* Topographic Map Design System */
+:root {
+  --contour-spacing: 20px;
+  --elevation-unit: 4px;
+}
+
+/* Base typography optimized for data-dense layouts */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'tnum' on, 'lnum' on; /* Tabular numbers */
+}
+
+/* Contour line utility classes */
+.contour-line {
+  position: relative;
+}
+
+.contour-line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid theme('colors.topo.300');
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+/* Elevation shadow effect */
+.elevation-1 {
+  box-shadow: 0 1px 0 0 rgba(0,0,0,0.05);
+}
+
+.elevation-2 {
+  box-shadow: 0 2px 0 0 rgba(0,0,0,0.05);
+}
+
+.elevation-3 {
+  box-shadow: 0 3px 0 0 rgba(0,0,0,0.05);
+}
+
+/* Map grid background */
+.map-grid {
+  background-image:
+    linear-gradient(to right, theme('colors.topo.200') 1px, transparent 1px),
+    linear-gradient(to bottom, theme('colors.topo.200') 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Data point styles for small colored items */
+.data-point {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.data-point::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.2;
+}
+
+/* Flow field animation for dynamic elements */
+@keyframes flow-drift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(2px, -2px); }
+  50% { transform: translate(0, -4px); }
+  75% { transform: translate(-2px, -2px); }
+}
+
+.flow-item {
+  animation: flow-drift 8s ease-in-out infinite;
+}
+
+/* Signal indicators - high contrast small items */
+.signal-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.signal-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Isobar-inspired separators */
+.isobar {
+  position: relative;
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+.isobar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-image: repeating-linear-gradient(
+    to right,
+    theme('colors.topo.300') 0px,
+    theme('colors.topo.300') 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+/* Metric display - design studio influence */
+.metric-value {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* Clean focus states */
+*:focus-visible {
+  outline: 2px solid theme('colors.signal.blue');
+  outline-offset: 2px;
+}
