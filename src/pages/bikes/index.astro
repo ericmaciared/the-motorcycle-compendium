@@ -1,0 +1,230 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BikeCard from '../../components/BikeCard.astro';
+import { supabase } from '../../lib/supabase';
+
+// Get filter parameters from URL
+const url = new URL(Astro.request.url);
+const selectedCategory = url.searchParams.get('category');
+const selectedManufacturer = url.searchParams.get('manufacturer');
+const minPrice = url.searchParams.get('minPrice');
+const maxPrice = url.searchParams.get('maxPrice');
+
+// Build query with filters
+let query = supabase
+  .from('motorbike_variants')
+  .select(`
+    *,
+    motorbike_models!inner (
+      name,
+      category,
+      manufacturers!inner (
+        name
+      )
+    )
+  `);
+
+// Apply filters
+if (selectedCategory) {
+  query = query.eq('motorbike_models.category', selectedCategory);
+}
+
+if (selectedManufacturer) {
+  query = query.eq('motorbike_models.manufacturers.name', selectedManufacturer);
+}
+
+if (minPrice) {
+  query = query.gte('price_usd', parseFloat(minPrice));
+}
+
+if (maxPrice) {
+  query = query.lte('price_usd', parseFloat(maxPrice));
+}
+
+// Fetch data
+const { data: bikes, error } = await query.order('created_at', { ascending: false });
+
+// Transform data
+const motorcycles = bikes?.map(bike => ({
+  id: bike.id,
+  slug: bike.slug,
+  variant_name: bike.variant_name,
+  year: bike.year,
+  price_usd: bike.price_usd,
+  engine_displacement_cc: bike.engine_displacement_cc,
+  horsepower_hp: bike.horsepower_hp,
+  description: bike.description,
+  model_name: bike.motorbike_models.name,
+  manufacturer_name: bike.motorbike_models.manufacturers.name,
+  category: bike.motorbike_models.category,
+})) || [];
+
+// Get unique manufacturers and categories for filters
+const { data: allManufacturers } = await supabase
+  .from('manufacturers')
+  .select('name')
+  .order('name');
+
+const manufacturers = allManufacturers?.map(m => m.name) || [];
+
+const categories = ['Sport', 'Cruiser', 'Adventure', 'Touring', 'Naked', 'Dual Sport', 'Scooter'];
+---
+
+<BaseLayout title="Browse All Motorcycles - The Motorbike Compendium">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Browse Motorcycles</h1>
+      <p class="text-slate-600">
+        Explore our collection of {motorcycles.length} motorcycles
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <!-- Filters Sidebar -->
+      <aside class="lg:col-span-1">
+        <div class="bg-white rounded-lg shadow-md p-6 sticky top-4">
+          <h2 class="text-xl font-bold mb-4">Filters</h2>
+          
+          <form method="get" action="/bikes">
+            <!-- Category Filter -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Category
+              </label>
+              <select 
+                name="category" 
+                class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">All Categories</option>
+                {categories.map(cat => (
+                  <option value={cat} selected={selectedCategory === cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <!-- Manufacturer Filter -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Manufacturer
+              </label>
+              <select 
+                name="manufacturer" 
+                class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">All Manufacturers</option>
+                {manufacturers.map(mfr => (
+                  <option value={mfr} selected={selectedManufacturer === mfr}>
+                    {mfr}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <!-- Price Range -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Price Range (USD)
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <input
+                  type="number"
+                  name="minPrice"
+                  placeholder="Min"
+                  value={minPrice || ''}
+                  class="border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <input
+                  type="number"
+                  name="maxPrice"
+                  placeholder="Max"
+                  value={maxPrice || ''}
+                  class="border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-2">
+              <button
+                type="submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+              >
+                Apply Filters
+              </button>
+              <a
+                href="/bikes"
+                class="block w-full bg-slate-200 text-slate-700 py-2 rounded-lg font-semibold hover:bg-slate-300 transition text-center"
+              >
+                Clear Filters
+              </a>
+            </div>
+          </form>
+
+          <!-- Active Filters -->
+          {(selectedCategory || selectedManufacturer || minPrice || maxPrice) && (
+            <div class="mt-6 pt-6 border-t border-slate-200">
+              <h3 class="text-sm font-semibold text-slate-700 mb-2">Active Filters:</h3>
+              <div class="space-y-2">
+                {selectedCategory && (
+                  <div class="text-sm bg-blue-50 text-blue-700 px-2 py-1 rounded">
+                    Category: {selectedCategory}
+                  </div>
+                )}
+                {selectedManufacturer && (
+                  <div class="text-sm bg-blue-50 text-blue-700 px-2 py-1 rounded">
+                    Make: {selectedManufacturer}
+                  </div>
+                )}
+                {(minPrice || maxPrice) && (
+                  <div class="text-sm bg-blue-50 text-blue-700 px-2 py-1 rounded">
+                    Price: ${minPrice || '0'} - ${maxPrice || '∞'}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </aside>
+
+      <!-- Results Grid -->
+      <main class="lg:col-span-3">
+        {motorcycles.length > 0 ? (
+          <>
+            <div class="mb-4 flex items-center justify-between">
+              <p class="text-slate-600">
+                Showing <span class="font-semibold">{motorcycles.length}</span> motorcycles
+              </p>
+              <select class="border border-slate-300 rounded-lg px-3 py-2 text-sm">
+                <option>Sort by: Newest</option>
+                <option>Sort by: Price (Low to High)</option>
+                <option>Sort by: Price (High to Low)</option>
+                <option>Sort by: Name (A-Z)</option>
+              </select>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {motorcycles.map(bike => (
+                <BikeCard bike={bike} />
+              ))}
+            </div>
+          </>
+        ) : (
+          <div class="bg-white rounded-lg shadow-md p-12 text-center">
+            <div class="text-6xl mb-4">🔍</div>
+            <h3 class="text-xl font-bold mb-2">No motorcycles found</h3>
+            <p class="text-slate-600 mb-4">Try adjusting your filters</p>
+            <a             
+              href="/bikes"
+              class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+            >
+              Clear All Filters
+            </a>
+          </div>
+        )}
+      </main>
+    </div>
+  </div>
+</BaseLayout>

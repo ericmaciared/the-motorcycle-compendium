@@ -1,0 +1,297 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { supabase } from '../../lib/supabase';
+
+// This tells Astro which pages to generate
+export async function getStaticPaths() {
+  const { data: bikes } = await supabase
+    .from('motorbike_variants')
+    .select(`
+      slug,
+      *,
+      motorbike_models!inner (
+        name,
+        category,
+        description,
+        manufacturers!inner (
+          name,
+          country,
+          founded_year
+        )
+      )
+    `);
+
+  return bikes?.map((bike) => ({
+    params: { slug: bike.slug },
+    props: { bike },
+  })) || [];
+}
+
+// Get the bike data from props (already fetched in getStaticPaths)
+const { bike } = Astro.props;
+
+if (!bike) {
+  return Astro.redirect('/404');
+}
+
+const manufacturer = bike.motorbike_models.manufacturers;
+const model = bike.motorbike_models;
+---
+
+<BaseLayout title={`${manufacturer.name} ${model.name} ${bike.variant_name} - The Motorbike Compendium`}>
+  <!-- Breadcrumbs -->
+  <nav class="bg-slate-50 py-4">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center space-x-2 text-sm text-slate-600">
+        <a href="/" class="hover:text-blue-600">Home</a>
+        <span>/</span>
+        <a href="/bikes" class="hover:text-blue-600">Motorcycles</a>
+        <span>/</span>
+        <a href={`/manufacturers/${manufacturer.name.toLowerCase().replace(/\s+/g, '-')}`} class="hover:text-blue-600">
+          {manufacturer.name}
+        </a>
+        <span>/</span>
+        <span class="text-slate-900 font-semibold">{model.name}</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+      <!-- Image Section -->
+      <div>
+        <div class="bg-gradient-to-br from-slate-700 to-slate-900 rounded-lg h-96 flex items-center justify-center mb-4">
+          <span class="text-white text-9xl">🏍️</span>
+        </div>
+        <div class="grid grid-cols-4 gap-2">
+          <div class="bg-slate-200 rounded h-20 flex items-center justify-center text-2xl">🏍️</div>
+          <div class="bg-slate-200 rounded h-20 flex items-center justify-center text-2xl">🏍️</div>
+          <div class="bg-slate-200 rounded h-20 flex items-center justify-center text-2xl">🏍️</div>
+          <div class="bg-slate-200 rounded h-20 flex items-center justify-center text-2xl">🏍️</div>
+        </div>
+      </div>
+
+      <!-- Info Section -->
+      <div>
+        <!-- Header -->
+        <div class="mb-6">
+          <span class="text-blue-600 font-semibold text-sm uppercase">{manufacturer.name}</span>
+          <h1 class="text-4xl font-bold text-slate-900 mt-1 mb-2">
+            {model.name}
+          </h1>
+          <p class="text-xl text-slate-600">{bike.variant_name} ({bike.year})</p>
+          {model.category && (
+            <span class="inline-block mt-2 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold">
+              {model.category}
+            </span>
+          )}
+        </div>
+
+        <!-- Price & Key Stats -->
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          {bike.price_usd && (
+            <div class="bg-blue-50 rounded-lg p-4">
+              <p class="text-sm text-slate-600 mb-1">Price</p>
+              <p class="text-2xl font-bold text-slate-900">${bike.price_usd.toLocaleString()}</p>
+            </div>
+          )}
+          {bike.engine_displacement_cc && (
+            <div class="bg-blue-50 rounded-lg p-4">
+              <p class="text-sm text-slate-600 mb-1">Engine</p>
+              <p class="text-2xl font-bold text-slate-900">{bike.engine_displacement_cc}cc</p>
+            </div>
+          )}
+          {bike.horsepower_hp && (
+            <div class="bg-blue-50 rounded-lg p-4">
+              <p class="text-sm text-slate-600 mb-1">Power</p>
+              <p class="text-2xl font-bold text-slate-900">{bike.horsepower_hp}hp</p>
+            </div>
+          )}
+        </div>
+
+        <!-- Description -->
+        {bike.description && (
+          <div class="mb-6">
+            <p class="text-slate-700 leading-relaxed">{bike.description}</p>
+          </div>
+        )}
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4">
+          <button class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
+            Add to Comparison
+          </button>
+          <button class="px-6 py-3 border-2 border-slate-300 rounded-lg font-semibold hover:border-slate-400 transition">
+            ❤️
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specifications Section -->
+    <div class="bg-white rounded-lg shadow-md p-8 mb-8">
+      <h2 class="text-2xl font-bold mb-6">Technical Specifications</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Engine -->
+        <div>
+          <h3 class="text-lg font-semibold text-slate-900 mb-4 flex items-center">
+            <span class="text-2xl mr-2">⚙️</span>
+            Engine & Performance
+          </h3>
+          <div class="space-y-3">
+            {bike.engine_type && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Engine Type</span>
+                <span class="font-semibold">{bike.engine_type}</span>
+              </div>
+            )}
+            {bike.engine_displacement_cc && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Displacement</span>
+                <span class="font-semibold">{bike.engine_displacement_cc}cc</span>
+              </div>
+            )}
+            {bike.horsepower_hp && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Power</span>
+                <span class="font-semibold">{bike.horsepower_hp} hp</span>
+              </div>
+            )}
+            {bike.torque_nm && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Torque</span>
+                <span class="font-semibold">{bike.torque_nm} Nm</span>
+              </div>
+            )}
+            {bike.top_speed_kmh && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Top Speed</span>
+                <span class="font-semibold">{bike.top_speed_kmh} km/h</span>
+              </div>
+            )}
+            {bike.cooling_system && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Cooling</span>
+                <span class="font-semibold">{bike.cooling_system}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Transmission & Dimensions -->
+        <div>
+          <h3 class="text-lg font-semibold text-slate-900 mb-4 flex items-center">
+            <span class="text-2xl mr-2">📏</span>
+            Dimensions & Weight
+          </h3>
+          <div class="space-y-3">
+            {bike.transmission_type && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Transmission</span>
+                <span class="font-semibold">{bike.transmission_type}</span>
+              </div>
+            )}
+            {bike.weight_kg && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Weight</span>
+                <span class="font-semibold">{bike.weight_kg} kg</span>
+              </div>
+            )}
+            {bike.seat_height_mm && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Seat Height</span>
+                <span class="font-semibold">{bike.seat_height_mm} mm</span>
+              </div>
+            )}
+            {bike.fuel_capacity_liters && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Fuel Capacity</span>
+                <span class="font-semibold">{bike.fuel_capacity_liters} L</span>
+              </div>
+            )}
+            {bike.fuel_consumption_l_per_100km && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Fuel Consumption</span>
+                <span class="font-semibold">{bike.fuel_consumption_l_per_100km} L/100km</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Brakes & Tires -->
+        <div>
+          <h3 class="text-lg font-semibold text-slate-900 mb-4 flex items-center">
+            <span class="text-2xl mr-2">🛞</span>
+            Brakes & Tires
+          </h3>
+          <div class="space-y-3">
+            {bike.front_brake_type && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Front Brake</span>
+                <span class="font-semibold">{bike.front_brake_type}</span>
+              </div>
+            )}
+            {bike.rear_brake_type && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Rear Brake</span>
+                <span class="font-semibold">{bike.rear_brake_type}</span>
+              </div>
+            )}
+            {bike.front_tire_size && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Front Tire</span>
+                <span class="font-semibold">{bike.front_tire_size}</span>
+              </div>
+            )}
+            {bike.rear_tire_size && (
+              <div class="flex justify-between py-2 border-b border-slate-100">
+                <span class="text-slate-600">Rear Tire</span>
+                <span class="font-semibold">{bike.rear_tire_size}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <!-- Electronics -->
+        <div>
+          <h3 class="text-lg font-semibold text-slate-900 mb-4 flex items-center">
+            <span class="text-2xl mr-2">💻</span>
+            Electronics & Features
+          </h3>
+          <div class="space-y-3">
+            <div class="flex justify-between py-2 border-b border-slate-100">
+              <span class="text-slate-600">ABS</span>
+              <span class="font-semibold">{bike.abs ? '✅ Yes' : '❌ No'}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-slate-100">
+              <span class="text-slate-600">Traction Control</span>
+              <span class="font-semibold">{bike.traction_control ? '✅ Yes' : '❌ No'}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Manufacturer Info -->
+    <div class="bg-slate-50 rounded-lg p-8">
+      <h2 class="text-2xl font-bold mb-4">About {manufacturer.name}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <span class="text-slate-600">Country</span>
+          <p class="font-semibold text-lg">{manufacturer.country}</p>
+        </div>
+        <div>
+          <span class="text-slate-600">Founded</span>
+          <p class="font-semibold text-lg">{manufacturer.founded_year}</p>
+        </div>
+        <div>
+          <a href={`/manufacturers/${manufacturer.name.toLowerCase().replace(/\s+/g, '-')}`} 
+             class="text-blue-600 hover:text-blue-700 font-semibold">
+            View all {manufacturer.name} models →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
