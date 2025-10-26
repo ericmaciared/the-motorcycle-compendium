@@ -42,7 +42,7 @@ const model = bike.motorbike_models;
   <!-- Breadcrumbs -->
   <nav class="bg-topo-100 py-4 elevation-1">
     <div class="container mx-auto px-4">
-      <div class="flex items-center gap-2 text-xs text-topo-600 uppercase tracking-wider">
+      <div class="flex items-center gap-2 text-xs text-topo-700 uppercase tracking-wider">
         <a href="/" class="hover:text-signal-blue font-medium">Home</a>
         <span>/</span>
         <a href="/bikes" class="hover:text-signal-blue font-medium">Motorcycles</a>
@@ -86,7 +86,7 @@ const model = bike.motorbike_models;
           <h1 class="text-5xl font-bold text-topo-900 mb-2 tracking-tight leading-none">
             {model.name}
           </h1>
-          <p class="text-xl text-topo-600 mb-3">{bike.variant_name} ({bike.year})</p>
+          <p class="text-xl text-topo-700 mb-3">{bike.variant_name} ({bike.year})</p>
           {model.category && (
             <span class="inline-block bg-signal-blue text-white px-3 py-1.5 text-xs font-bold uppercase tracking-wider elevation-1">
               {model.category}
@@ -99,21 +99,21 @@ const model = bike.motorbike_models;
           {bike.price_usd && (
             <div class="bg-topo-100 p-4 relative">
               <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-signal-red opacity-40"></div>
-              <p class="text-xs text-topo-500 uppercase tracking-wide mb-1 font-medium">Price</p>
+              <p class="text-xs text-topo-700 uppercase tracking-wide mb-1 font-medium">Price</p>
               <p class="text-2xl font-bold text-topo-900 metric-value">${bike.price_usd.toLocaleString()}</p>
             </div>
           )}
           {bike.engine_displacement_cc && (
             <div class="bg-topo-100 p-4 relative">
               <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-signal-amber opacity-40"></div>
-              <p class="text-xs text-topo-500 uppercase tracking-wide mb-1 font-medium">Engine</p>
+              <p class="text-xs text-topo-700 uppercase tracking-wide mb-1 font-medium">Engine</p>
               <p class="text-2xl font-bold text-topo-900 metric-value">{bike.engine_displacement_cc}<span class="text-sm">cc</span></p>
             </div>
           )}
           {bike.horsepower_hp && (
             <div class="bg-topo-100 p-4 relative">
               <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-signal-green opacity-40"></div>
-              <p class="text-xs text-topo-500 uppercase tracking-wide mb-1 font-medium">Power</p>
+              <p class="text-xs text-topo-700 uppercase tracking-wide mb-1 font-medium">Power</p>
               <p class="text-2xl font-bold text-topo-900 metric-value">{bike.horsepower_hp}<span class="text-sm">hp</span></p>
             </div>
           )}
@@ -122,7 +122,7 @@ const model = bike.motorbike_models;
         <!-- Description -->
         {bike.description && (
           <div class="mb-6 p-4 bg-topo-50 elevation-1">
-            <p class="text-topo-700 leading-relaxed">{bike.description}</p>
+            <p class="text-topo-900 leading-relaxed">{bike.description}</p>
           </div>
         )}
 
@@ -131,7 +131,7 @@ const model = bike.motorbike_models;
           <button class="flex-1 bg-topo-900 text-topo-50 px-6 py-3 font-bold hover:bg-signal-blue transition uppercase tracking-wider text-sm elevation-1">
             Add to Comparison
           </button>
-          <button class="px-6 py-3 bg-topo-100 hover:bg-topo-200 transition elevation-1">
+          <button class="px-6 py-3 bg-topo-100 text-topo-900 hover:bg-topo-200 transition elevation-1">
             ❤️
           </button>
         </div>
@@ -155,37 +155,37 @@ const model = bike.motorbike_models;
           <div class="space-y-2">
             {bike.engine_type && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Engine Type</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Engine Type</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.engine_type}</span>
               </div>
             )}
             {bike.engine_displacement_cc && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Displacement</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Displacement</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.engine_displacement_cc}cc</span>
               </div>
             )}
             {bike.horsepower_hp && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Power</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Power</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.horsepower_hp} hp</span>
               </div>
             )}
             {bike.torque_nm && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Torque</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Torque</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.torque_nm} Nm</span>
               </div>
             )}
             {bike.top_speed_kmh && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Top Speed</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Top Speed</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.top_speed_kmh} km/h</span>
               </div>
             )}
             {bike.cooling_system && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Cooling</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Cooling</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.cooling_system}</span>
               </div>
             )}
@@ -201,31 +201,31 @@ const model = bike.motorbike_models;
           <div class="space-y-2">
             {bike.transmission_type && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Transmission</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Transmission</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.transmission_type}</span>
               </div>
             )}
             {bike.weight_kg && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Weight</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Weight</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.weight_kg} kg</span>
               </div>
             )}
             {bike.seat_height_mm && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Seat Height</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Seat Height</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.seat_height_mm} mm</span>
               </div>
             )}
             {bike.fuel_capacity_liters && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Fuel Capacity</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Fuel Capacity</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.fuel_capacity_liters} L</span>
               </div>
             )}
             {bike.fuel_consumption_l_per_100km && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Fuel Consumption</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Fuel Consumption</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.fuel_consumption_l_per_100km} L/100km</span>
               </div>
             )}
@@ -241,25 +241,25 @@ const model = bike.motorbike_models;
           <div class="space-y-2">
             {bike.front_brake_type && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Front Brake</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Front Brake</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.front_brake_type}</span>
               </div>
             )}
             {bike.rear_brake_type && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Rear Brake</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Rear Brake</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.rear_brake_type}</span>
               </div>
             )}
             {bike.front_tire_size && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Front Tire</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Front Tire</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.front_tire_size}</span>
               </div>
             )}
             {bike.rear_tire_size && (
               <div class="flex justify-between py-2 isobar">
-                <span class="text-topo-600 text-xs uppercase tracking-wider">Rear Tire</span>
+                <span class="text-topo-700 text-xs uppercase tracking-wider">Rear Tire</span>
                 <span class="font-bold text-topo-900 metric-value">{bike.rear_tire_size}</span>
               </div>
             )}
@@ -274,11 +274,11 @@ const model = bike.motorbike_models;
           </h3>
           <div class="space-y-2">
             <div class="flex justify-between py-2 isobar">
-              <span class="text-topo-600 text-xs uppercase tracking-wider">ABS</span>
+              <span class="text-topo-700 text-xs uppercase tracking-wider">ABS</span>
               <span class="font-bold text-topo-900 metric-value">{bike.abs ? '✅ Yes' : '❌ No'}</span>
             </div>
             <div class="flex justify-between py-2 isobar">
-              <span class="text-topo-600 text-xs uppercase tracking-wider">Traction Control</span>
+              <span class="text-topo-700 text-xs uppercase tracking-wider">Traction Control</span>
               <span class="font-bold text-topo-900 metric-value">{bike.traction_control ? '✅ Yes' : '❌ No'}</span>
             </div>
           </div>
@@ -291,11 +291,11 @@ const model = bike.motorbike_models;
       <h2 class="text-2xl font-bold text-topo-900 mb-6 tracking-tight">About {manufacturer.name}</h2>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div>
-          <span class="text-topo-600 text-xs uppercase tracking-wider font-bold">Country</span>
+          <span class="text-topo-700 text-xs uppercase tracking-wider font-bold">Country</span>
           <p class="font-bold text-lg text-topo-900 mt-1">{manufacturer.country}</p>
         </div>
         <div>
-          <span class="text-topo-600 text-xs uppercase tracking-wider font-bold">Founded</span>
+          <span class="text-topo-700 text-xs uppercase tracking-wider font-bold">Founded</span>
           <p class="font-bold text-lg text-topo-900 mt-1 metric-value">{manufacturer.founded_year}</p>
         </div>
         <div class="flex items-end">

@@ -22,7 +22,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  border: 1px solid theme('colors.topo.300');
+  border: 1px solid #d6d3d1;
   pointer-events: none;
   opacity: 0.3;
 }
@@ -43,8 +43,8 @@ body {
 /* Map grid background */
 .map-grid {
   background-image:
-    linear-gradient(to right, theme('colors.topo.200') 1px, transparent 1px),
-    linear-gradient(to bottom, theme('colors.topo.200') 1px, transparent 1px);
+    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -114,8 +114,8 @@ body {
   height: 3px;
   background-image: repeating-linear-gradient(
     to right,
-    theme('colors.topo.300') 0px,
-    theme('colors.topo.300') 1px,
+    #d6d3d1 0px,
+    #d6d3d1 1px,
     transparent 1px,
     transparent 4px
   );
@@ -130,6 +130,6 @@ body {
 
 /* Clean focus states */
 *:focus-visible {
-  outline: 2px solid theme('colors.signal.blue');
+  outline: 2px solid #0ea5e9;
   outline-offset: 2px;
 }

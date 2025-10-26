@@ -59,8 +59,8 @@ const bikeCount = bikes?.length || 0;
     <div class="absolute inset-0 bg-flow-field opacity-10"></div>
 
     <div class="container mx-auto px-4 text-center relative z-10">
-      <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-signal-blue/20 text-signal-blue text-xs font-bold uppercase tracking-widest elevation-1">
-        <span class="signal-dot bg-signal-blue"></span>
+      <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-signal-blue text-black text-xs font-bold uppercase tracking-widest elevation-1">
+        <span class="signal-dot bg-white"></span>
         AI-Powered Motorcycle Database
       </div>
 
@@ -103,8 +103,8 @@ const bikeCount = bikes?.length || 0;
 
           <div class="relative">
             <div class="text-6xl font-extrabold text-topo-900 mb-3 metric-value">{bikeCount}</div>
-            <div class="text-topo-700 font-bold text-sm uppercase tracking-widest">Motorcycle Models</div>
-            <div class="text-topo-500 text-xs mt-2 uppercase tracking-wider">And counting...</div>
+            <div class="text-topo-900 font-bold text-sm uppercase tracking-widest">Motorcycle Models</div>
+            <div class="text-topo-700 text-xs mt-2 uppercase tracking-wider">And counting...</div>
           </div>
         </div>
 
@@ -115,8 +115,8 @@ const bikeCount = bikes?.length || 0;
 
           <div class="relative">
             <div class="text-6xl font-extrabold text-topo-900 mb-3 metric-value">{manufacturerCount}</div>
-            <div class="text-topo-700 font-bold text-sm uppercase tracking-widest">Manufacturers</div>
-            <div class="text-topo-500 text-xs mt-2 uppercase tracking-wider">Global brands</div>
+            <div class="text-topo-900 font-bold text-sm uppercase tracking-widest">Manufacturers</div>
+            <div class="text-topo-700 text-xs mt-2 uppercase tracking-wider">Global brands</div>
           </div>
         </div>
 
@@ -127,8 +127,8 @@ const bikeCount = bikes?.length || 0;
 
           <div class="relative">
             <div class="text-6xl font-extrabold text-topo-900 mb-3 metric-value">AI</div>
-            <div class="text-topo-700 font-bold text-sm uppercase tracking-widest">Powered Insights</div>
-            <div class="text-topo-500 text-xs mt-2 uppercase tracking-wider">Smart recommendations</div>
+            <div class="text-topo-900 font-bold text-sm uppercase tracking-widest">Powered Insights</div>
+            <div class="text-topo-700 text-xs mt-2 uppercase tracking-wider">Smart recommendations</div>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ const bikeCount = bikes?.length || 0;
       <div class="flex items-center justify-between mb-10">
         <div>
           <h2 class="text-4xl md:text-5xl font-bold text-topo-900 mb-2 tracking-tight">Featured Motorcycles</h2>
-          <p class="text-topo-600 text-sm uppercase tracking-wider">Explore our latest additions</p>
+          <p class="text-topo-700 text-sm uppercase tracking-wider">Explore our latest additions</p>
         </div>
         <a href="/bikes" class="text-topo-900 hover:text-signal-blue font-bold flex items-center gap-2 group uppercase text-sm tracking-wider">
           View All
@@ -155,8 +155,8 @@ const bikeCount = bikes?.length || 0;
           ))}
         </div>
       ) : (
-        <div class="text-center py-12">
-          <p class="text-topo-600">No motorcycles found. Run the seed script to add data!</p>
+        <div class="text-center py-12 bg-topo-50 elevation-2 rounded">
+          <p class="text-topo-900 font-bold">No motorcycles found. Run the seed script to add data!</p>
         </div>
       )}
     </div>
@@ -181,7 +181,7 @@ const bikeCount = bikes?.length || 0;
     <div class="container mx-auto px-4 text-center relative z-10">
       <h2 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Ready to Explore?</h2>
       <p class="text-lg md:text-xl mb-10 text-topo-300 max-w-2xl mx-auto">Discover detailed specs, compare models, and get AI-powered insights to find your perfect ride</p>
-      <a href="/bikes" class="inline-block bg-signal-blue text-white px-10 py-4 font-bold hover:bg-topo-900 transition-all duration-200 elevation-2 hover:elevation-3 uppercase tracking-wider text-sm">
+      <a href="/bikes" class="inline-block bg-signal-blue text-black px-10 py-4 font-bold hover:bg-topo-900 transition-all duration-200 elevation-2 hover:elevation-3 uppercase tracking-wider text-sm">
         Browse All Motorcycles
         <span class="ml-2">→</span>
       </a>

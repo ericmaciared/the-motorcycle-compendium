@@ -20,7 +20,7 @@ if (error) {
       <h1 class="text-5xl md:text-6xl font-bold text-topo-900 mb-3 tracking-tight">Motorcycle Manufacturers</h1>
       <div class="flex items-center gap-3">
         <span class="data-point bg-signal-amber"></span>
-        <p class="text-topo-600 uppercase tracking-wider text-sm font-bold">
+        <p class="text-topo-700 uppercase tracking-wider text-sm font-bold">
           Explore {manufacturers?.length || 0} legendary motorcycle brands from around the world
         </p>
       </div>
@@ -43,7 +43,7 @@ if (error) {
                 <h2 class="text-2xl font-bold text-topo-900 mb-3 tracking-tight leading-tight">
                   {manufacturer.name}
                 </h2>
-                <div class="flex items-center gap-2 text-xs text-topo-600">
+                <div class="flex items-center gap-2 text-xs text-topo-700">
                   <span class="text-xl">{manufacturer.country === 'Japan' ? '🇯🇵' : manufacturer.country === 'Italy' ? '🇮🇹' : manufacturer.country === 'Germany' ? '🇩🇪' : manufacturer.country === 'USA' ? '🇺🇸' : manufacturer.country === 'Austria' ? '🇦🇹' : manufacturer.country === 'UK' ? '🇬🇧' : manufacturer.country === 'India' ? '🇮🇳' : '🌍'}</span>
                   <span class="font-bold uppercase tracking-wider">{manufacturer.country}</span>
                   {manufacturer.founded_year && (
@@ -54,7 +54,7 @@ if (error) {
 
               <!-- Description -->
               {manufacturer.description && (
-                <p class="text-topo-700 text-sm line-clamp-3 mb-4 leading-relaxed">
+                <p class="text-topo-900 text-sm line-clamp-3 mb-4 leading-relaxed">
                   {manufacturer.description}
                 </p>
               )}
@@ -72,7 +72,7 @@ if (error) {
       <div class="bg-topo-50 elevation-2 p-12 text-center">
         <div class="text-6xl mb-4">🏭</div>
         <h3 class="text-xl font-bold text-topo-900 mb-2">No manufacturers found</h3>
-        <p class="text-topo-600 text-sm uppercase tracking-wider">Check back soon for more manufacturers</p>
+        <p class="text-topo-800 text-sm uppercase tracking-wider">Check back soon for more manufacturers</p>
       </div>
     )}
   </div>
