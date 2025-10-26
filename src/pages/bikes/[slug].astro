@@ -100,7 +100,7 @@ const model = bike.motorbike_models;
             <div class="bg-topo-100 p-4 relative">
               <div class="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-signal-red opacity-40"></div>
               <p class="text-xs text-topo-700 uppercase tracking-wide mb-1 font-medium">Price</p>
-              <p class="text-2xl font-bold text-topo-900 metric-value">${bike.price_usd.toLocaleString()}</p>
+              <p class="text-2xl font-bold text-topo-900 metric-value">€{bike.price_usd.toLocaleString()}</p>
             </div>
           )}
           {bike.engine_displacement_cc && (

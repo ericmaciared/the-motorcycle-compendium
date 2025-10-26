@@ -48,45 +48,45 @@ const bikeCount = bikes?.length || 0;
 
 <BaseLayout title="The Motorbike Compendium - Your Complete Motorcycle Reference">
   <!-- Hero Section - Topographic/Meteorological Style -->
-  <section class="relative bg-topo-900 text-topo-50 py-24 md:py-32 overflow-hidden">
+  <section class="relative bg-white text-topo-900 py-24 md:py-32 overflow-hidden">
     <!-- Topographic map pattern background -->
-    <div class="absolute inset-0 opacity-30">
+    <div class="absolute inset-0 opacity-20">
       <div class="absolute inset-0 bg-contour-lines"></div>
       <div class="absolute inset-0 bg-topo-grid"></div>
     </div>
 
     <!-- Flow field subtle animation -->
-    <div class="absolute inset-0 bg-flow-field opacity-10"></div>
+    <div class="absolute inset-0 bg-flow-field opacity-5"></div>
 
     <div class="container mx-auto px-4 text-center relative z-10">
       <div class="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-signal-blue text-black text-xs font-bold uppercase tracking-widest elevation-1">
-        <span class="signal-dot bg-white"></span>
+        <span class="signal-dot bg-topo-900"></span>
         AI-Powered Motorcycle Database
       </div>
 
-      <h1 class="text-6xl md:text-8xl font-extrabold mb-6 text-topo-50 leading-none tracking-tighter">
+      <h1 class="text-6xl md:text-8xl font-extrabold mb-6 text-topo-900 leading-none tracking-tighter">
         The Motorbike<br class="md:hidden" /> Compendium
       </h1>
 
-      <p class="text-lg md:text-xl mb-10 text-topo-300 max-w-2xl mx-auto font-medium">
+      <p class="text-lg md:text-xl mb-10 text-topo-700 max-w-2xl mx-auto font-medium">
         Discover, compare, and explore motorcycles from around the world with intelligent AI-powered insights
       </p>
 
       <!-- Quick stats - Data-point style -->
-      <div class="flex justify-center gap-8 text-sm text-topo-400 mt-8">
+      <div class="flex justify-center gap-8 text-sm text-topo-600 mt-8">
         <div class="flex items-center gap-2">
           <span class="data-point bg-signal-red"></span>
-          <span class="metric-value text-topo-100">{manufacturerCount}+</span> Brands
+          <span class="metric-value text-topo-900">{manufacturerCount}+</span> Brands
         </div>
-        <div class="w-px h-4 bg-topo-600"></div>
+        <div class="w-px h-4 bg-topo-300"></div>
         <div class="flex items-center gap-2">
           <span class="data-point bg-signal-amber"></span>
-          <span class="metric-value text-topo-100">{bikeCount}+</span> Models
+          <span class="metric-value text-topo-900">{bikeCount}+</span> Models
         </div>
-        <div class="w-px h-4 bg-topo-600"></div>
+        <div class="w-px h-4 bg-topo-300"></div>
         <div class="flex items-center gap-2">
           <span class="data-point bg-signal-green"></span>
-          <span class="metric-value text-topo-100">AI</span> Insights
+          <span class="metric-value text-topo-900">AI</span> Insights
         </div>
       </div>
     </div>
@@ -163,15 +163,15 @@ const bikeCount = bikes?.length || 0;
   </section>
 
 
-  <section class="relative py-20 bg-topo-800 text-topo-50 overflow-hidden">
+  <section class="relative py-20 bg-topo-50 text-topo-900 overflow-hidden">
     <!-- Topographic elements -->
-    <div class="absolute inset-0 opacity-20">
+    <div class="absolute inset-0 opacity-15">
       <div class="absolute inset-0 bg-contour-lines"></div>
       <div class="absolute inset-0 bg-topo-grid"></div>
     </div>
 
     <!-- Signal dots scattered -->
-    <div class="absolute inset-0 opacity-30">
+    <div class="absolute inset-0 opacity-40">
       <div class="absolute top-10 left-20 w-3 h-3 bg-signal-red rounded-full"></div>
       <div class="absolute top-32 right-40 w-2 h-2 bg-signal-amber rounded-full"></div>
       <div class="absolute bottom-24 left-1/3 w-3 h-3 bg-signal-green rounded-full"></div>
@@ -180,8 +180,8 @@ const bikeCount = bikes?.length || 0;
 
     <div class="container mx-auto px-4 text-center relative z-10">
       <h2 class="text-4xl md:text-6xl font-bold mb-4 tracking-tight">Ready to Explore?</h2>
-      <p class="text-lg md:text-xl mb-10 text-topo-300 max-w-2xl mx-auto">Discover detailed specs, compare models, and get AI-powered insights to find your perfect ride</p>
-      <a href="/bikes" class="inline-block bg-signal-blue text-black px-10 py-4 font-bold hover:bg-topo-900 transition-all duration-200 elevation-2 hover:elevation-3 uppercase tracking-wider text-sm">
+      <p class="text-lg md:text-xl mb-10 text-topo-700 max-w-2xl mx-auto">Discover detailed specs, compare models, and get AI-powered insights to find your perfect ride</p>
+      <a href="/bikes" class="inline-block bg-signal-blue text-black px-10 py-4 font-bold hover:bg-topo-900 hover:text-white transition-all duration-200 elevation-2 hover:elevation-3 uppercase tracking-wider text-sm">
         Browse All Motorcycles
         <span class="ml-2">→</span>
       </a>

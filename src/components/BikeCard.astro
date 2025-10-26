@@ -77,9 +77,9 @@ const { bike } = Astro.props;
     {bike.price_usd && (
       <div class="mb-5 pb-5 isobar">
         <span class="text-3xl font-extrabold text-topo-900 metric-value">
-          ${bike.price_usd.toLocaleString()}
+          €{bike.price_usd.toLocaleString()}
         </span>
-        <span class="text-topo-700 text-sm ml-1 font-semibold uppercase tracking-wider">USD</span>
+        <span class="text-topo-700 text-sm ml-1 font-semibold uppercase tracking-wider">EUR</span>
       </div>
     )}
 
