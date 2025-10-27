@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MotorbikeVisualization from '../components/MotorbikeVisualization';
+import { supabase } from '../lib/supabase';
+
+// Fetch all motorbike variants with their models and manufacturers
+const { data: bikes, error } = await supabase
+  .from('motorbike_variants')
+  .select(`
+    id,
+    variant_name,
+    horsepower_hp,
+    price_usd,
+    engine_displacement_cc,
+    motorbike_models!inner (
+      name,
+      category,
+      manufacturers!inner (
+        name
+      )
+    )
+  `)
+  .eq('is_available', true);
+
+if (error) {
+  console.error('Error fetching bikes:', error);
+}
+
+// Transform data for visualization
+const visualizationData = bikes?.map(bike => ({
+  id: bike.id,
+  name: `${bike.motorbike_models.manufacturers.name} ${bike.motorbike_models.name} ${bike.variant_name}`,
+  category: bike.motorbike_models.category || 'Other',
+  manufacturer: bike.motorbike_models.manufacturers.name,
+  horsepower_hp: bike.horsepower_hp,
+  price_usd: bike.price_usd,
+  engine_displacement_cc: bike.engine_displacement_cc,
+})) || [];
+---
+
+<BaseLayout title="Motorbike Universe Visualization">
+  <div class="visualization-wrapper">
+    <MotorbikeVisualization bikes={visualizationData} client:load />
+  </div>
+</BaseLayout>
+
+<style>
+  .visualization-wrapper {
+    width: 100vw;
+    height: calc(100vh - 64px);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #0a0a0a, #1a1a2e);
+  }
+</style>

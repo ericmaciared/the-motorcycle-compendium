@@ -44,6 +44,16 @@ const currentPath = Astro.url.pathname;
         >
           Manufacturers
         </a>
+        <a
+          href="/visualization"
+          class={`px-4 py-2 font-medium text-sm uppercase tracking-wider transition-all ${
+            currentPath === '/visualization'
+              ? 'text-topo-900 relative after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-signal-blue'
+              : 'text-topo-600 hover:text-topo-900'
+          }`}
+        >
+          3D Universe
+        </a>
 
         <!-- Theme Toggle Button -->
         <button
@@ -105,6 +115,16 @@ const currentPath = Astro.url.pathname;
           }`}
         >
           Manufacturers
+        </a>
+        <a
+          href="/visualization"
+          class={`px-4 py-2 font-medium text-sm uppercase tracking-wider transition-all ${
+            currentPath === '/visualization'
+              ? 'text-topo-900 bg-topo-200'
+              : 'text-topo-600 hover:bg-topo-100'
+          }`}
+        >
+          3D Universe
         </a>
 
         <!-- Theme Toggle Button (Mobile) -->
