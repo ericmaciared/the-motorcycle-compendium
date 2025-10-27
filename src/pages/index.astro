@@ -36,14 +36,22 @@ const motorcycles = bikes?.map(bike => ({
   category: bike.motorbike_models.category,
 })) || [];
 
+// Get total counts
 const { data: manufacturers, error: manufacturersError } = await supabase.from('manufacturers').select('*');
+const { count: totalBikeCount, error: countError } = await supabase
+  .from('motorbike_variants')
+  .select('*', { count: 'exact', head: true });
 
 if (manufacturersError) {
   console.error('Error fetching manufacturers:', manufacturersError);
 }
 
+if (countError) {
+  console.error('Error fetching bike count:', countError);
+}
+
 const manufacturerCount = manufacturers?.length || 0;
-const bikeCount = bikes?.length || 0;
+const bikeCount = totalBikeCount || 0;
 ---
 
 <BaseLayout title="The Motorbike Compendium - Your Complete Motorcycle Reference">
