@@ -61,6 +61,7 @@ export type MotorbikeVariant = {
   abs: boolean;
   traction_control: boolean;
   description: string | null;
+  image_url: string | null;
   is_available: boolean;
   created_at: string;
   updated_at: string;
