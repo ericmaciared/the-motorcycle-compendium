@@ -16,6 +16,22 @@ const { title } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
+
+    <!-- Theme initialization script - runs before page renders to prevent FOUC -->
+    <script is:inline>
+      // Initialize theme before page renders
+      (function() {
+        const getThemePreference = () => {
+          const stored = localStorage.getItem('theme');
+          if (stored) return stored;
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        };
+
+        const theme = getThemePreference();
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -26,7 +42,7 @@ const { title } = Astro.props;
       }
     </style>
   </head>
-  <body class="min-h-screen bg-white antialiased relative">
+  <body class="min-h-screen bg-topo-50 antialiased relative">
     <!-- Topographic grid background -->
     <div class="fixed inset-0 bg-topo-grid opacity-20 pointer-events-none"></div>
 
@@ -38,5 +54,31 @@ const { title } = Astro.props;
       <Navigation />
       <slot />
     </div>
+
+    <!-- Theme toggle utility script -->
+    <script>
+      // Theme toggle functionality
+      const toggleTheme = () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+
+        // Dispatch event for any components that need to react
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: newTheme } }));
+      };
+
+      // Make toggle function globally available
+      (window as any).toggleTheme = toggleTheme;
+
+      // Listen for system theme changes
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+          const newTheme = e.matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', newTheme);
+        }
+      });
+    </script>
   </body>
 </html>

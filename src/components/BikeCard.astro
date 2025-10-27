@@ -23,12 +23,12 @@ const { bike } = Astro.props;
   <div class="absolute inset-0 bg-flow-field opacity-20 pointer-events-none"></div>
 
   <!-- Placeholder Image with topographic styling -->
-  <div class="relative h-56 bg-gradient-to-br from-topo-700 via-topo-800 to-topo-900 flex items-center justify-center overflow-hidden">
+  <div class="relative h-56 bg-gradient-to-br from-topo-200 via-topo-300 to-topo-400 flex items-center justify-center overflow-hidden">
     <!-- Subtle grid pattern overlay -->
     <div class="absolute inset-0 opacity-10">
-      <div class="w-full h-full" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(255,255,255,0.1) 19px, rgba(255,255,255,0.1) 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(255,255,255,0.1) 19px, rgba(255,255,255,0.1) 20px);"></div>
+      <div class="w-full h-full" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, var(--border-primary) 19px, var(--border-primary) 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, var(--border-primary) 19px, var(--border-primary) 20px);"></div>
     </div>
-    <span class="text-white text-7xl transform group-hover:scale-105 transition-transform duration-300 relative z-10">🏍️</span>
+    <span class="text-topo-900 text-7xl transform group-hover:scale-105 transition-transform duration-300 relative z-10">🏍️</span>
 
     {bike.category && (
       <span class="absolute top-3 right-3 text-xs font-bold bg-signal-blue text-black px-2.5 py-1 uppercase tracking-wider elevation-1">

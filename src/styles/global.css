@@ -56,6 +56,114 @@
   --elevation-unit: 4px;
 }
 
+/* Theme Variables - Light Mode (Default) */
+:root {
+  /* Background colors */
+  --bg-primary: #fafaf9;
+  --bg-secondary: #f5f5f4;
+  --bg-tertiary: #e7e5e4;
+  --bg-elevated: #ffffff;
+
+  /* Text colors */
+  --text-primary: #1c1917;
+  --text-secondary: #44403c;
+  --text-tertiary: #78716c;
+
+  /* Border colors */
+  --border-primary: #e7e5e4;
+  --border-secondary: #d6d3d1;
+
+  /* Component colors */
+  --card-bg: #ffffff;
+  --card-hover-bg: #f5f5f4;
+  --nav-bg: rgba(255, 255, 255, 0.9);
+
+  /* Pattern colors */
+  --pattern-contour: rgba(255, 255, 255, 0.3);
+  --pattern-grid: rgba(255, 255, 255, 0.5);
+  --pattern-flow: rgba(120, 113, 108, 0.08);
+
+  /* Shadow colors */
+  --shadow-sm: rgba(0, 0, 0, 0.05);
+  --shadow-md: rgba(0, 0, 0, 0.08);
+  --shadow-lg: rgba(0, 0, 0, 0.1);
+
+  /* Gradient colors */
+  --gradient-start: #44403c;
+  --gradient-end: #1c1917;
+  --gradient-placeholder: rgba(28, 25, 23, 0.05);
+
+  /* SVG pattern colors */
+  --svg-pattern-contour: %23ffffff;
+  --svg-pattern-grid: %23ffffff;
+  --svg-pattern-flow: %2378716c;
+}
+
+/* Theme Variables - Dark Mode */
+[data-theme="dark"] {
+  /* Background colors - inverted topo scale */
+  --bg-primary: #1c1917;
+  --bg-secondary: #292524;
+  --bg-tertiary: #44403c;
+  --bg-elevated: #292524;
+
+  /* Text colors - inverted for dark mode */
+  --text-primary: #fafaf9;
+  --text-secondary: #e7e5e4;
+  --text-tertiary: #a8a29e;
+
+  /* Border colors */
+  --border-primary: #44403c;
+  --border-secondary: #57534e;
+
+  /* Component colors */
+  --card-bg: #292524;
+  --card-hover-bg: #44403c;
+  --nav-bg: rgba(28, 25, 23, 0.9);
+
+  /* Pattern colors - darker for dark mode */
+  --pattern-contour: rgba(68, 64, 60, 0.3);
+  --pattern-grid: rgba(68, 64, 60, 0.5);
+  --pattern-flow: rgba(168, 162, 158, 0.08);
+
+  /* Shadow colors - lighter for dark mode */
+  --shadow-sm: rgba(0, 0, 0, 0.3);
+  --shadow-md: rgba(0, 0, 0, 0.4);
+  --shadow-lg: rgba(0, 0, 0, 0.5);
+
+  /* Gradient colors */
+  --gradient-start: #57534e;
+  --gradient-end: #44403c;
+  --gradient-placeholder: rgba(250, 250, 249, 0.05);
+
+  /* SVG pattern colors - encoded for dark mode */
+  --svg-pattern-contour: %2344403c;
+  --svg-pattern-grid: %2344403c;
+  --svg-pattern-flow: %23a8a29e;
+
+  /* Update Tailwind color variables for dark mode */
+  --color-topo-50: #1c1917;
+  --color-topo-100: #292524;
+  --color-topo-200: #44403c;
+  --color-topo-300: #57534e;
+  --color-topo-400: #78716c;
+  --color-topo-500: #a8a29e;
+  --color-topo-600: #d6d3d1;
+  --color-topo-700: #e7e5e4;
+  --color-topo-800: #f5f5f4;
+  --color-topo-900: #fafaf9;
+
+  /* Update background images with dark mode colors */
+  --background-image-contour-lines: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c16.569 0 30 13.431 30 30 0 16.569-13.431 30-30 30C13.431 60 0 46.569 0 30 0 13.431 13.431 0 30 0zm0 10C18.954 10 10 18.954 10 30s8.954 20 20 20 20-8.954 20-20S41.046 10 30 10zm0 5c8.284 0 15 6.716 15 15s-6.716 15-15 15-15-6.716-15-15 6.716-15 15-15z' fill='%2344403c' fill-opacity='0.3' fill-rule='evenodd'/%3E%3C/svg%3E");
+  --background-image-topo-grid: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h1v100H0zM0 0v1h100V0z' fill='%2344403c' fill-opacity='0.5' /%3E%3C/svg%3E");
+  --background-image-flow-field: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23a8a29e' fill-opacity='0.08'%3E%3Cpath d='M0 20l2-2 2 2-2 2zm8 0l2-2 2 2-2 2zm8 0l2-2 2 2-2 2zm8 0l2-2 2 2-2 2zm8 0l2-2 2 2-2 2z'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* Update box shadows for dark mode */
+  --box-shadow-topo: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.25);
+  --box-shadow-topo-lg: 0 4px 6px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.25);
+  --box-shadow-elevation: inset 0 -1px 0 rgba(255,255,255,0.1);
+}
+
 /* Base typography optimized for data-dense layouts */
 body {
   -webkit-font-smoothing: antialiased;
@@ -72,29 +180,29 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  border: 1px solid #d6d3d1;
+  border: 1px solid var(--border-secondary);
   pointer-events: none;
   opacity: 0.3;
 }
 
 /* Elevation shadow effect */
 .elevation-1 {
-  box-shadow: 0 1px 0 0 rgba(0,0,0,0.05);
+  box-shadow: 0 1px 0 0 var(--shadow-sm);
 }
 
 .elevation-2 {
-  box-shadow: 0 2px 0 0 rgba(0,0,0,0.05);
+  box-shadow: 0 2px 0 0 var(--shadow-sm);
 }
 
 .elevation-3 {
-  box-shadow: 0 3px 0 0 rgba(0,0,0,0.05);
+  box-shadow: 0 3px 0 0 var(--shadow-sm);
 }
 
 /* Map grid background */
 .map-grid {
   background-image:
-    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px);
+    linear-gradient(to right, var(--border-primary) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-primary) 1px, transparent 1px);
   background-size: 20px 20px;
 }
 
@@ -164,8 +272,8 @@ body {
   height: 3px;
   background-image: repeating-linear-gradient(
     to right,
-    #d6d3d1 0px,
-    #d6d3d1 1px,
+    var(--border-secondary) 0px,
+    var(--border-secondary) 1px,
     transparent 1px,
     transparent 4px
   );
